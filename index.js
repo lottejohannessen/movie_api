@@ -69,7 +69,7 @@ let topMovies = [
 
 // GET requests
 app.get('/', (req, res) => {
-  res.send('Something Obvious! lol');
+  res.send('welcome to myFlix!');
 });
 
 app.get('/documentation', (req, res) => {
@@ -77,7 +77,14 @@ app.get('/documentation', (req, res) => {
 });
 
 app.get('/movies',  (req, res) => {
-  res.json(topMovies);
+  Movies.find()
+  .then(movies => {
+    res.status(201).json(movies);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error: ' + err);
+  });
 });
 
 // Get data about a single movie, by title
@@ -89,15 +96,29 @@ app.get('/movies/:Title', (req, res) => {
 
 // Get data about a genre by movie title
 app.get('/movies/Genres/:Title', (req, res) => {
-  res.send('Fight Club & The Dark Knight')
+  let genre = req.params.name;
+  Movies.findOne({"Genre.Title" : genre}).then((genreTitle)=>
+  {
+    res.status(202).json(genreTitle.Genre)
+  }).catch((error) =>
+  {
+    console.log(error);
+    res.status(500).send("Error 500: " + error)
+  })
 });
 
 // Get data about a director by name
 app.get('/movies/Directors/:Name', (req, res) => {
-  res.send('Francis Ford Coppola is an American film director, producer and screen writer. He was a central figure in the New Hollywood filmaking movement of the 1960s and 70s, and is widely considered to be one of the greatest filmmakers of all time.')
+  let director = req.params.name;
+  Movies.findOne({"Director.Name" : director}).then((directorName) =>
+  {
+    res.status(202).json(directorName.Director)
+  }).catch((error) =>
+  {
+    console.log(error);
+    res.status(500).send("Error 500: " + error)
+  })
 });
-
-
 
 // Post new user registration
 app.post('/users',(req, res) => {
@@ -190,10 +211,29 @@ app.post('/users/:Username/Movies/:MovieID', (req, res) => {
 
 // Deletes a movie from list of user's favorites
 app.delete('/users/:Username/Movies/:MovieID', (req, res) => {
-  res.send('deletes a movie from list of users favorites');
-});
+  let favourite = req.params.movieId;
+  let user = req.params.username;
+  Users.findOneAndUpdate({Username: user},
+    { $pull:
+    {
+      FavouriteMovies : favourite
+    }
+  }).then((user) =>
+  {
+    if(!user)
+    {
+      res.status(400).send(req.params.username + 'was not found')
+    } else
+    {
+      res.status(200).send(req.params.movieId + ' was deleted.');
+    }
+  }).catch((error) =>
+  {
+    console.log(error);
+    res.status(500).send("Error: " + error)
+  })
+})
 
-// Deletes a user from registration database
 app.delete('/users/:Username', (req, res) => {
   Users.findOneAndRemove({ Username: req.params.Username })
   .then((user) => {

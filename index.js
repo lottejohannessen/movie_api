@@ -8,11 +8,16 @@ const Users = Models.User;
 mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
 const app = express();
 
+const passport = require('passport');
+require('./passport');
+
+
 app.use(morgan('common'));
 
 app.use(express.static('public'));
 
 app.use(bodyParser.json());
+let auth = require('./auth')(app);
 
 let topMovies = [
   {

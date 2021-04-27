@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
-mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/test', { useNewUrlParser: true, useUnifiedTopology: true });
 const app = express();
 
 const passport = require('passport');
@@ -96,7 +96,7 @@ app.get('/documentation', (req, res) => {
   res.sendFile('public/documentation.html', { root: __dirname });
 });
 
-app.get('/movies',  (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find()
   .then(movies => {
     res.status(201).json(movies);
@@ -147,6 +147,10 @@ app.post('/users', [
   check('Password', 'Password is required').not().isEmpty(),
   check('Email', 'Email does not appear to be valid').isEmail()
 ], (req, res) => {
+  let errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
 
  let hashedPassword = Users.hashPassword(req.body.Password);
  Users.findOne({Username: req.body.Username })
@@ -173,10 +177,6 @@ app.post('/users', [
     res.status(500).send('Error: ' + error);
   });
 });
-let errors = validationResult(req);
-if (!errors.isEmpty()) {
-  return res.status(422).json({ errors: errors.array() });
-}
 
 // Get all users
 app.get('/users',  (req, res) => {
@@ -286,3 +286,4 @@ const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0', () => {
   console.log('Listening on Port ' + port);
 });
+

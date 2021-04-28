@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
-mongoose.connect('mongodb://localhost:27017/test', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://myFlixDBadmin:<1234>@myflixdb.hsvyr.mongodb.net/myFlixDB?retryWrites=true&w=majority');
 const app = express();
 
 const passport = require('passport');

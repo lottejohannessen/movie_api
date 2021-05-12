@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const morgan = require('morgan');
+// const morgan = require('morgan');
 const {check, validationResult } = require('express-validator');
 const mongoose = require('mongoose');
 const Models = require('./models.js');
@@ -27,7 +27,7 @@ app.use(cors({
   }
 }));
 
-app.use(morgan('common'));
+// app.use(morgan('common'));
 
 app.use(express.static('public'));
 

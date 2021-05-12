@@ -88,11 +88,11 @@ let topMovies = [
 ];
 
 // GET requests
-app.get('/', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get('/', (req, res) => {
   res.send('welcome to myFlix!');
 });
 
-app.get('/documentation', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get('/documentation', (req, res) => {
   res.sendFile('public/documentation.html', { root: __dirname });
 });
 
@@ -146,7 +146,7 @@ app.post('/users', [
   check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
   check('Password', 'Password is required').not().isEmpty(),
   check('Email', 'Email does not appear to be valid').isEmail()
-], passport.authenticate('jwt', {session: false}), (req, res) => {
+], (req, res) => {
   let errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });

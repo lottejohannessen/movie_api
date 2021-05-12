@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 let movieSchema = mongoose.Schema({
     Title: {type: String, required:true},
     Description: {type: String, required:true},
-    genre: {
+    Genre: {
         Name: String,
         Description: String
     },
@@ -17,7 +17,7 @@ let movieSchema = mongoose.Schema({
     ImagePath: String,
     Featured:Boolean
 });
-
+ 
 let userSchema = mongoose.Schema({
     Username:{type: String, required: true},
     Password:{type: String, required: true},

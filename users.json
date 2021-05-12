@@ -1,6 +1,1 @@
-{"_id":{"$oid":"6070ed5c96827a3357879db1"},"username":"blahblah","password":"123","email":"blah@gmail.com","birthday":{"date":"1900-12-01"}}
-{"_id":{"$oid":"6070edd496827a3357879db2"},"username":"bloobloo","password":"321","email":"bloo@gmail.com","birthday":{"date":"2021-01-21"}}
-{"_id":{"$oid":"6070ee6a96827a3357879db3"},"username":"blubblub","password":"234","email":"blub@gmail.com","birthday":{"date":"2002-07-01"}}
-{"_id":{"$oid":"6070eecf96827a3357879db4"},"username":"plumplum","password":"678","email":"plum@gmail.com","birthday":{"date":"2004-10-12"}}
-{"_id":{"$oid":"6070ef4996827a3357879db5"},"username":"toobtoob","password":"934","email":"toob@gmail.com","birthday":{"date":"1999-09-20"}}
 {"_id":{"$oid":"60870852eaedec3abf972fa5"},"FavouriteMovies":[],"Username":"giota","Password":"$2b$10$JEO0FiQqjBZb5g.AA1pGi.MboEWGzeIQoiJF.MpHQXzrvD5cSbSY.","Email":"giota@gmail.com","__v":0}
